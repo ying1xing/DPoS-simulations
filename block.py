@@ -1,6 +1,5 @@
 class Block:
-    def __init__(self, id, content, proposer, committee):
-        self.id = id
+    def __init__(self, content, proposer, committee):
         self.content = content
         self.signers = []
         self.proposer = proposer
@@ -9,7 +8,9 @@ class Block:
     def isValid(self):
         return True
 
-    def isConfirmed(self , size):
-        if len(self.signatures) > (2*(size / 3)):
+    def isConfirmed(self , validators, selectedVoters):
+        totalVotingPower = sum(v.votingPower for v in validators)
+        selectedVotingPower = sum(sv.votingPower for sv in selectedVoters)
+        if (selectedVotingPower/totalVotingPower) > (2 / 3):
             return True
         return False

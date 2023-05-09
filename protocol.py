@@ -1,13 +1,13 @@
 from committee import Committee
 
 class Protocol:
-    def __init__(self, committeeSize, validators, deligators, committeeSelector, rounds):
+    def __init__(self, committeeSize, validators, deligators, rounds, setup):
         self.committeeSize = committeeSize
         self.validators = validators
         self.deligators = deligators
-        self.committeeSelector = committeeSelector
         self.rounds = rounds
         self.blockchain = []
+        self.setup = setup
 
     def selectCommittee(self):
         self.committee = Committee(self.committeeSize)
