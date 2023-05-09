@@ -1,10 +1,10 @@
 from committee import Committee
 
 class Protocol:
-    def __init__(self, committeeSize, validators, deligators, rounds, setup):
+    def __init__(self, committeeSize, validators, deligators, rounds, setup, reward):
         self.committeeSize = committeeSize
         self.validators = validators
-        self.deligators = deligators
+        self.delegators = deligators
         self.rounds = rounds
         self.blockchain = []
         self.setup = setup
@@ -13,8 +13,8 @@ class Protocol:
         self.committee = Committee(self.committeeSize)
         self.committeeSelector(self.committee, self.validators)
 
-    def calculateRewards(self):
-        pass
+    def calculateRewards(self, committee):
+        committee.calculateRewards(self.reward)
 
     def run(self):
         for i in self.rounds:
@@ -22,7 +22,7 @@ class Protocol:
             newBlock = committee.round(self.blockchain)
             if newBlock is not None:
                 self.blockchain.append(newBlock)
-                self.calculateRewards()
+                self.calculateRewards(committee)
 
 
 

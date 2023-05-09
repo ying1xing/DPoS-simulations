@@ -7,8 +7,9 @@ class Validator:
         self.type = type
         self.stake = stake
         self.proposedBlocks = []
-        self.deligators = {}
+        self.delegators = {}
         self.votingPower = 0
+        self.totalReward = 0
 
     def propose(self, committee):
         r = random.randint(0, 100)
@@ -21,9 +22,24 @@ class Validator:
             return True
         return False
 
-    def selectVotes(self, votes):
-        voters = []
+    def selectVoters(self, votes):
+        voters = {}
         for voter in votes:
             if votes[voter]:
-                voters.append[voter]
+                voters[voter] = True
         return voters
+
+    def removeDelegator(self, delegator):
+        self.delegators[delegator] = 0
+        self.votingPower -= delegator.stake
+
+    def addDelegator(self, delegator):
+        self.delegators[delegator] = delegator.stake
+        self.votingPower += delegator.stake
+
+    def updateReward(self, pool, reward, totalReward):
+        self.totalReward += (self.stake / self.votingPower) * reward
+        for delegator in self.delegators:
+            if self.delegators[delegator] > 0:
+                share = delegator.stake/self.votingPower
+                delegator.updateReward(pool, share, totalReward)
