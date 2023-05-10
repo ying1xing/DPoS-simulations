@@ -1,10 +1,24 @@
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
+from protocol import Protocol
+from committee import Committee
+from deligator import Delegator
+from validator import Validator
+from cosmos import Cosmos
 
 
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    print_hi('PyCharm')
+    validators = []
+    delegators = []
+    for i in range(100):
+        validators.append(Validator(len(validators), 200))
+    for i in range(200):
+        delegators.append(Delegator(len(delegators), 50))
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    committeeSize = 20
+    rounds = 1000
+    reward = 100
+
+    setup = Cosmos()
+
+    protocol = Protocol(committeeSize, validators, delegators, rounds, setup, reward)
+    protocol.run()
+

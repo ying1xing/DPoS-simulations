@@ -2,9 +2,8 @@ import random
 from block import Block
 
 class Validator:
-    def __init__ (self , id , type , stake):
+    def __init__ (self , id , stake):
         self.id = id
-        self.type = type
         self.stake = stake
         self.proposedBlocks = []
         self.delegators = {}

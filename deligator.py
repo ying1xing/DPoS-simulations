@@ -1,9 +1,8 @@
 import random
 
-class delegator:
-    def __init__ (self , id , type , stake):
+class Delegator:
+    def __init__ (self , id , stake):
         self.id = id
-        self.type = type
         self.stake = stake
         self.boundedValidator = None
         self.totalReward = 0
@@ -18,7 +17,8 @@ class delegator:
         return delegatorShare
 
     def changeValidator(self, pool):
-        self.boundedValidator.removeDelegator(self)
+        if self.boundedValidator is not None:
+            self.boundedValidator.removeDelegator(self)
         validator = random.choice(pool)
         self.boundedValidator = validator
         self.boundedValidator.addDelegator(self)

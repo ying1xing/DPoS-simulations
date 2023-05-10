@@ -8,21 +8,31 @@ class Protocol:
         self.rounds = rounds
         self.blockchain = []
         self.setup = setup
+        self.reward = reward
 
     def selectCommittee(self):
-        self.committee = Committee(self.committeeSize)
-        self.committeeSelector(self.committee, self.validators)
+        committee = Committee(self.committeeSize, self.setup)
+        self.setup.selectCommittee(committee, self.validators)
+        return committee
 
     def calculateRewards(self, committee):
         committee.calculateRewards(self.reward)
 
+    def updateDelegations(self, committee):
+        for delegator in self.delegators:
+            if delegator.boundedValidator not in committee.validators:
+                delegator.changeValidator(committee.validators)
+
     def run(self):
-        for i in self.rounds:
+        for i in range(self.rounds):
             committee  = self.selectCommittee()
-            newBlock = committee.round(self.blockchain)
+            self.updateDelegations(committee)
+            newBlock = committee.round()
             if newBlock is not None:
                 self.blockchain.append(newBlock)
                 self.calculateRewards(committee)
+
+                
 
 
 
