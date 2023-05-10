@@ -12,18 +12,14 @@ class Committee:
         self.proposer = self.setup.chooseProposer(self.validators)
 
     def totalVotersVotingPower(self):
-        total = 0
-        for validator in self.validators:
-            if self.selectedVoters[validator]:
-                total += validator.votingPower
+        total = sum(v.votingPower for v in self.selectedVoters)
         return total
 
     def calculateRewards(self, reward):
         total = self.totalVotersVotingPower()
-        for validator in self.validators:
-            if self.selectedVoters[validator]:
-                share = (validator.votingPower / total) * reward
-                validator.updateReward(self.validators, share, reward)
+        for validator in self.selectedVoters:
+            share = (validator.votingPower / total) * reward
+            validator.updateReward(self.validators, share, reward)
 
     def round(self):
         self.chooseProposer()

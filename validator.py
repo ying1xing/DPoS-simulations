@@ -7,7 +7,7 @@ class Validator:
         self.stake = stake
         self.proposedBlocks = []
         self.delegators = {}
-        self.votingPower = 0
+        self.votingPower = self.stake
         self.totalReward = 0
 
     def propose(self, committee):
@@ -40,5 +40,5 @@ class Validator:
         self.totalReward += (self.stake / self.votingPower) * reward
         for delegator in self.delegators:
             if self.delegators[delegator] > 0:
-                share = delegator.stake/self.votingPower
+                share = (delegator.stake/self.votingPower) * reward
                 delegator.updateReward(pool, share, totalReward)

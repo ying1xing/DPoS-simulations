@@ -25,5 +25,6 @@ class Delegator:
 
     def updateReward(self, pool, reward, totalReward):
         self.totalReward += reward
-        if reward < self.expectedEarning(pool, totalReward):
+        expectedReward = self.expectedEarning(pool, totalReward)
+        if reward < expectedReward:
             self.changeValidator(pool)

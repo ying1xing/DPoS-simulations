@@ -1,10 +1,10 @@
 from committee import Committee
 
 class Protocol:
-    def __init__(self, committeeSize, validators, deligators, rounds, setup, reward):
+    def __init__(self, committeeSize, validators, delegators, rounds, setup, reward):
         self.committeeSize = committeeSize
         self.validators = validators
-        self.delegators = deligators
+        self.delegators = delegators
         self.rounds = rounds
         self.blockchain = []
         self.setup = setup
@@ -21,18 +21,20 @@ class Protocol:
     def updateDelegations(self, committee):
         for delegator in self.delegators:
             if delegator.boundedValidator not in committee.validators:
-                delegator.changeValidator(committee.validators)
+                delegator.changeValidator(self.validators)
 
     def run(self):
+        #committee = self.selectCommittee()
+        #self.updateDelegations(committee)
         for i in range(self.rounds):
-            committee  = self.selectCommittee()
+            committee = self.selectCommittee()
             self.updateDelegations(committee)
             newBlock = committee.round()
             if newBlock is not None:
                 self.blockchain.append(newBlock)
                 self.calculateRewards(committee)
 
-                
+
 
 
 
