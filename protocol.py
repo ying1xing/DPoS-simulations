@@ -18,21 +18,36 @@ class Protocol:
     def calculateRewards(self, committee):
         committee.calculateRewards(self.reward)
 
-    def updateDelegations(self, committee):
+    def calculateValidatorsScores(self):
+        #total = 0
+        #for validator in self.validators:
+            #total+= validator.totalReward
+        total_rewards = sum(validator.totalReward for validator in self.validators)
+        total_stake = sum(validator.votingPower for validator in self.validators)
+        for validator in self.validators:
+            if validator.count == 0:
+                validator.score = 10000000
+            else:
+                validator.score = ((validator.totalReward / total_rewards) / (validator.votingPower * validator.count)) * 10000000
+            print(str(validator.totalReward) + str(" ")+ str(total_rewards) +" " + str(validator.votingPower) +" "+ str(total_stake) +" " + str(validator.score))
+        print("$$$")
+
+    def updateDelegations(self):
         for delegator in self.delegators:
-            if delegator.boundedValidator not in committee.validators:
                 delegator.changeValidator(self.validators)
 
     def run(self):
         #committee = self.selectCommittee()
         #self.updateDelegations(committee)
         for i in range(self.rounds):
+            self.updateDelegations()
             committee = self.selectCommittee()
-            self.updateDelegations(committee)
             newBlock = committee.round()
             if newBlock is not None:
                 self.blockchain.append(newBlock)
                 self.calculateRewards(committee)
+                self.calculateValidatorsScores()
+
 
 
 

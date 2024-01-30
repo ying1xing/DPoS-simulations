@@ -15,7 +15,7 @@ if __name__ == '__main__':
 
     committeeSize = 20
     rounds = 1000
-    reward = 100
+    reward = 1000
 
     setup = Cosmos()
 

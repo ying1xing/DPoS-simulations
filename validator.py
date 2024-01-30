@@ -9,6 +9,8 @@ class Validator:
         self.delegators = {}
         self.votingPower = self.stake
         self.totalReward = 0
+        self.score = 1000 # Validator score indicates chances of being selected by a deligator. Deafult everyone is 1000.
+        self.count = 0 # Number of times the validator was in the committee
 
     def propose(self, committee):
         r = random.randint(0, 100)
