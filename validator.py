@@ -24,10 +24,10 @@ class Validator:
         return False
 
     def selectVoters(self, votes):
-        voters = {}
+        voters = []
         for voter in votes:
             if votes[voter]:
-                voters[voter] = True
+                voters.append(voter)
         return voters
 
     def removeDelegator(self, delegator):

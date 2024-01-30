@@ -2,14 +2,17 @@ from protocol import Protocol
 from committee import Committee
 from deligator import Delegator
 from validator import Validator
+from byzantine import Byzantine
 from cosmos import Cosmos
 import matplotlib.pyplot as plt
 
 if __name__ == '__main__':
     validators = []
     delegators = []
-    for i in range(100):
+    for i in range(90):
         validators.append(Validator(len(validators), 200))
+    for i in range(10):
+        validators.append(Byzantine(len(validators), 200, [validators[0]]))
     for i in range(1000):
         delegators.append(Delegator(len(delegators), 50))
 

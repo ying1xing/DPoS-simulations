@@ -29,8 +29,6 @@ class Protocol:
                 validator.score = 10000000
             else:
                 validator.score = ((validator.totalReward / total_rewards) / (validator.votingPower * validator.count)) * 10000000
-            print(str(validator.totalReward) + str(" ")+ str(total_rewards) +" " + str(validator.votingPower) +" "+ str(total_stake) +" " + str(validator.score))
-        print("$$$")
 
     def updateDelegations(self):
         for delegator in self.delegators:

@@ -20,13 +20,9 @@ class Delegator:
         if self.boundedValidator is not None:
             self.boundedValidator.removeDelegator(self)
         weights = [validator.score for validator in pool]
-        #print(weights)
         validator = random.choices(pool, weights=weights)[0]
         self.boundedValidator = validator
         self.boundedValidator.addDelegator(self)
 
     def updateReward(self, pool, reward, totalReward):
         self.totalReward += reward
-        #expectedReward = self.expectedEarning(pool, totalReward)
-        #if reward < expectedReward:
-        #    self.changeValidator(pool)
