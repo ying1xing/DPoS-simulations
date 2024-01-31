@@ -4,6 +4,7 @@ from deligator import Delegator
 from validator import Validator
 from byzantine import Byzantine
 from cosmos import Cosmos
+from randomselect import RandomSelect
 import matplotlib.pyplot as plt
 
 if __name__ == '__main__':
@@ -17,10 +18,11 @@ if __name__ == '__main__':
         delegators.append(Delegator(len(delegators), 50))
 
     committeeSize = 20
-    rounds = 1000
+    rounds = 30000
     reward = 1000
 
-    setup = Cosmos()
+    #setup = Cosmos()
+    setup = RandomSelect()
 
     protocol = Protocol(committeeSize, validators, delegators, rounds, setup, reward)
     protocol.run()

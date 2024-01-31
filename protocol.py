@@ -38,6 +38,7 @@ class Protocol:
         #committee = self.selectCommittee()
         #self.updateDelegations(committee)
         for i in range(self.rounds):
+            print(i)
             self.updateDelegations()
             committee = self.selectCommittee()
             newBlock = committee.round()
