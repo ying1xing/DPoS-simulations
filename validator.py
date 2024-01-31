@@ -11,6 +11,7 @@ class Validator:
         self.totalReward = 0
         self.score = 1000 # Validator score indicates chances of being selected by a deligator. Deafult everyone is 1000.
         self.count = 0 # Number of times the validator was in the committee
+        self.dcount =0 # total number of delegators
 
     def propose(self, committee):
         r = random.randint(0, 100)
@@ -37,6 +38,7 @@ class Validator:
     def addDelegator(self, delegator):
         self.delegators[delegator] = delegator.stake
         self.votingPower += delegator.stake
+        self.dcount += 1
 
     def updateReward(self, pool, reward, totalReward):
         self.totalReward += (self.stake / self.votingPower) * reward
