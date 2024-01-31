@@ -10,15 +10,15 @@ import matplotlib.pyplot as plt
 if __name__ == '__main__':
     validators = []
     delegators = []
-    for i in range(90):
+    for i in range(70):
         validators.append(Validator(len(validators), 200))
-    for i in range(10):
+    for i in range(30):
         validators.append(Byzantine(len(validators), 200, [validators[0]], True))
     for i in range(1000):
         delegators.append(Delegator(len(delegators), 50))
 
     committeeSize = 20
-    rounds = 30000
+    rounds = 50000
     reward = 1000
 
     #setup = Cosmos()
@@ -30,6 +30,9 @@ if __name__ == '__main__':
     rewards = [v.totalReward for v in validators]
 
     dcounts = [v.dcount/rounds for v in validators]
+
+    print(dcounts)
+    print(rewards)
 
     # Generate x-axis values (0 to 99 in this case)
     x = range(len(rewards))

@@ -15,14 +15,23 @@ class Committee:
         total = sum(v.votingPower for v in self.selectedVoters)
         return total
 
+    def totalCommitteeVotingPower(self):
+        total = sum(v.votingPower for v in self.validators)
+        return total
+
     def calculateRewards(self, reward):
         bonus = self.setup.bonus * reward
         reward = reward - bonus
         total = self.totalVotersVotingPower()
+        totalCommittee = self.totalCommitteeVotingPower()
         for validator in self.selectedVoters:
             share = (validator.votingPower / total) * reward
             if validator == self.proposer:
-                share += bonus
+                if self.setup.variational:
+                    bonus = ((total - ((2/3)*totalCommittee)) / ((1/3)*totalCommittee))*bonus
+                    share += bonus
+                else:
+                    share += bonus
             validator.updateReward(self.validators, share, reward)
 
     def round(self):

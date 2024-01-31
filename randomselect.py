@@ -2,7 +2,8 @@ import random
 
 class RandomSelect:
     def __init__(self):
-        self.bonus = 0
+        self.bonus = 0.05
+        self.variational = True
 
     def selectCommittee(self, committee, pool):
         weights = [validator.votingPower for validator in pool]
