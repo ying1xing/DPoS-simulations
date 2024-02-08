@@ -13,9 +13,9 @@ if __name__ == '__main__':
     for i in range(70):
         validators.append(Validator(len(validators), 200))
     for i in range(30):
-        validators.append(Byzantine(len(validators), 200, [validators[0]], True))
+        validators.append(Byzantine(len(validators), 200, [validators[0]], False))
     for i in range(1000):
-        delegators.append(Delegator(len(delegators), 50))
+        delegators.append(Delegator(len(delegators), 50, 1))
 
     committeeSize = 20
     rounds = 50000
@@ -31,8 +31,11 @@ if __name__ == '__main__':
 
     dcounts = [v.dcount/rounds for v in validators]
 
+    overallrewards = [v.overallRewars for v in validators]
+
     print(dcounts)
     print(rewards)
+    print(overallrewards)
 
     # Generate x-axis values (0 to 99 in this case)
     x = range(len(rewards))
