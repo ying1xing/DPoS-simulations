@@ -15,7 +15,7 @@ if __name__ == '__main__':
     for i in range(30):
         validators.append(Byzantine(len(validators), 200, [validators[0]], False))
     for i in range(1000):
-        delegators.append(Delegator(len(delegators), 50, 1))
+        delegators.append(Delegator(len(delegators), 50, 1, 0))
 
     committeeSize = 20
     rounds = 50000
