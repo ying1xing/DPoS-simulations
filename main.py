@@ -6,6 +6,7 @@ from byzantine import Byzantine
 from cosmos import Cosmos
 from randomselect import RandomSelect
 import matplotlib.pyplot as plt
+import time
 
 if __name__ == '__main__':
     validators = []
@@ -18,7 +19,7 @@ if __name__ == '__main__':
         delegators.append(Delegator(len(delegators), 50, 1, 0))
 
     committeeSize = 20
-    rounds = 50000
+    rounds = 50
     reward = 1000
 
     #setup = Cosmos()
@@ -48,8 +49,11 @@ if __name__ == '__main__':
     plt.ylabel('Reward')
     plt.title('Comparison of Rewards')
 
-    # Display the plot
-    plt.show()
+    # Save the plot as a file
+    plt.savefig('rewards_plot.png')
+
+    # Clear the current figure
+    plt.clf()
 
     plt.bar(x, dcounts)
 
@@ -58,6 +62,5 @@ if __name__ == '__main__':
     plt.ylabel('Average number of delegators per round')
     plt.title('Comparison')
 
-    # Display the plot
-    plt.show()
-
+    # Save the plot as a file
+    plt.savefig('delegators_plot.png')
