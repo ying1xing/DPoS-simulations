@@ -13,11 +13,13 @@ class Validator:
         self.count = 0 # Number of times the validator was in the committee
         self.dcount =0 # total number of delegators
         self.overallRewars = 0 # reward for all voting power
+        self.block_proposal_count = 0  # 新增属性，记录出块次数
 
     def propose(self, committee):
         r = random.randint(0, 100)
         b = Block(r, self, committee)
         self.proposedBlocks.append(b)
+        self.block_proposal_count += 1  # 更新出块次数
         return b
 
     def sign(self , block):
