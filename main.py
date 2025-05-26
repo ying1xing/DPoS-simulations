@@ -30,38 +30,37 @@ if __name__ == '__main__':
     protocol.run()
 
     rewards = [v.totalReward for v in validators]
-
     dcounts = [v.dcount/rounds for v in validators]
-
     overallrewards = [v.overallRewars for v in validators]
+    block_proposal_counts = [v.block_proposal_count for v in validators]  # 获取出块次数
 
     print(dcounts)
     print(rewards)
     print(overallrewards)
+    print(block_proposal_counts)  # 打印出块次数
 
     # Generate x-axis values (0 to 99 in this case)
     x = range(len(rewards))
 
-    # Create the bar plot
+    # Create the bar plot for rewards
     plt.bar(x, rewards)
-
-    # Add labels and title
     plt.xlabel('Item')
     plt.ylabel('Reward')
     plt.title('Comparison of Rewards')
-
-    # Save the plot as a file
     plt.savefig('rewards_plot.png')
-
-    # Clear the current figure
     plt.clf()
 
+    # Create the bar plot for delegators
     plt.bar(x, dcounts)
-
-    # Add labels and title
     plt.xlabel('Validators')
     plt.ylabel('Average number of delegators per round')
     plt.title('Comparison')
-
-    # Save the plot as a file
     plt.savefig('delegators_plot.png')
+    plt.clf()
+
+    # Create the bar plot for block proposal counts
+    plt.bar(x, block_proposal_counts)
+    plt.xlabel('Validators')
+    plt.ylabel('Block Proposal Count')
+    plt.title('Block Proposal Counts of Validators')
+    plt.savefig('block_proposal_counts_plot.png')
