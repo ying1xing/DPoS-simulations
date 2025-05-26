@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 from committee import Committee
 import time
+import random
 
 class Protocol:
-    def __init__(self, committeeSize, validators, delegators, rounds, setup, reward):
+    def __init__(self, committeeSize, validators, delegators, rounds, setup, reward, offline_rate):
         self.committeeSize = committeeSize
         self.validators = validators
         self.delegators = delegators
@@ -11,6 +12,7 @@ class Protocol:
         self.blockchain = []
         self.setup = setup
         self.reward = reward
+        self.offline_rate = offline_rate  # 新增参数，用于存储掉线率
 
     def selectCommittee(self):
         committee = Committee(self.committeeSize, self.setup)
@@ -44,7 +46,21 @@ class Protocol:
             print(i)
             self.updateDelegations()
             committee = self.selectCommittee()
+
+            # 根据设置的掉线率模拟出块节点掉线
+            if random.random() < self.offline_rate:
+                print(f"Round {i}: 出块节点掉线")
+                time.sleep(block_gap)
+                continue
+
+            start_round_time = time.time()
             newBlock = committee.round()
+            end_round_time = time.time()
+
+            if end_round_time - start_round_time > block_gap:
+                print(f"Round {i}: 出块时间超过 {block_gap} 秒，进入下一轮")
+                continue
+
             if newBlock is not None:
                 current_time = time.time()  # 记录当前块的生成时间
                 block_times.append(current_time - last_time)  # 计算时间差并存储
@@ -54,7 +70,7 @@ class Protocol:
                 self.calculateRewards(committee)
                 self.calculateValidatorsScores()
 
-                block_count += 6000  # 增加块的数量
+                block_count += newBlock.transaction_count  # 增加块的数量
                 time.sleep(block_gap)  # 引入 3 秒的出块间隙
 
         end_time = time.time()  # 记录模拟结束时间
@@ -63,13 +79,13 @@ class Protocol:
         # 计算平均出块时间
         if block_times:
             average_block_time = sum(block_times) / len(block_times)
-            print("Average block time: %s seconds" % average_block_time)
+            print("Average block time: {:.2f} seconds".format(average_block_time))
         else:
             print("No blocks were generated.")
 
         # 计算 TPS
         if total_time > 0:
             tps = block_count / total_time
-            print("TPS: %s transactions per second" % tps)
+            print("TPS: {:.2f} transactions per second".format(tps))
         else:
             print("TPS cannot be calculated as total time is 0.")
