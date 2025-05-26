@@ -19,13 +19,14 @@ if __name__ == '__main__':
         delegators.append(Delegator(len(delegators), 50, 1, 0))
 
     committeeSize = 20
-    rounds = 50
+    rounds = 600
     reward = 1000
+    offline_rate = 0.1  # 手动设置掉线率
 
-    #setup = Cosmos()
+    # setup = Cosmos()
     setup = RandomSelect()
 
-    protocol = Protocol(committeeSize, validators, delegators, rounds, setup, reward)
+    protocol = Protocol(committeeSize, validators, delegators, rounds, setup, reward, offline_rate)
     protocol.run()
 
     rewards = [v.totalReward for v in validators]
